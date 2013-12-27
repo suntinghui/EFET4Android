@@ -24,8 +24,8 @@ public class TxActionImp {
 	private Map<String, Object> req_map = null;
 	private String clientTransferCode = "";
 
-	String TPDU = "6000050000";
-	String msgHeader = "603110000000";
+	private static String TPDU = "6000050000";
+	private static String HEADER = "603110000000";
 
 	public byte[] first(Map<String, Object> reqMap, InputStream inStream) {
 		req_map = reqMap;
@@ -82,23 +82,6 @@ public class TxActionImp {
 		Map<Integer, cnFieldParseInfo> parseMap = mfact.getParseMap(msgType);
 
 		m = new CnMessage(msgType);
-
-		/**
-		 * 设置TPDU的数据
-		 * */
-		if (m.setMessageTPDUData(0, TPDU.getBytes()) == false) {
-			System.out.println("设置TPDU出错。");
-			System.exit(-1);
-		}
-
-		/**
-		 * 设置报文头的数据
-		 * */
-
-		if (m.setMessageHeaderData(0, msgHeader.getBytes()) == false) {
-			System.out.println("设置报文头出错。");
-			System.exit(-1);
-		}
 
 		/* =================变量声明================= */
 		Iterator<Integer> it = parseMap.keySet().iterator();
@@ -201,8 +184,8 @@ public class TxActionImp {
 		/**
 		 * 进行BCD码压缩
 		 * */
-		msgTPDU = ConvertUtil.byte2BCD(m.getmsgTPDU());
-		msgHeader = ConvertUtil.byte2BCD(m.getmsgHeader());
+		msgTPDU = ConvertUtil.byte2BCD(TPDU.getBytes());
+		msgHeader = ConvertUtil.byte2BCD(HEADER.getBytes());
 		msgtypeid = ConvertUtil._str2Bcd(m.getMsgTypeID());
 
 		/**
@@ -263,8 +246,8 @@ public class TxActionImp {
 	// 输出一个报文内容
 	private static void print(CnMessage m) {
 		System.out.println("--------------------NEW MESSAGE--------------------------------- " + m.getField(11));
-		System.out.println("Message TPDU = \t[" + new String(m.getmsgTPDU()) + "]");
-		System.out.println("Message Header = \t[" + new String(m.getmsgHeader()) + "]");
+		System.out.println("Message TPDU = \t[" + TPDU + "]");
+		System.out.println("Message Header = \t[" + HEADER + "]");
 		System.out.println("Message TypeID = \t[" + m.getMsgTypeID() + "]");
 		m.hasField(1);
 

@@ -22,16 +22,6 @@ public class CnMessage {
 	/** bit map 位图 */
 	private Map<Integer, cnValue<?>> fields = new ConcurrentHashMap<Integer, cnValue<?>>();
 
-	/**
-	 * 报头信息
-	 */
-	private byte[] msgTPDU;
-
-	/**
-	 * 报头信息
-	 */
-	private byte[] msgHeader;
-
 	public CnMessage() {
 
 	}
@@ -46,51 +36,6 @@ public class CnMessage {
 	 */
 	public CnMessage(String msgtypeid) {
 		this.msgtypeid = msgtypeid;
-
-		/* 赋给msgHeader的容量 */
-		msgHeader = new byte[12];
-
-		/* 赋给msgTPDU的容量 */
-		msgTPDU = new byte[10];
-	}
-
-	/** 获取报头信息 */
-	public byte[] getmsgHeader() {
-		return msgHeader;
-	}
-
-	/** 获取TPDU信息 */
-	public byte[] getmsgTPDU() {
-		return msgTPDU;
-	}
-
-	/**
-	 * 设置报文头的数据，由于不同的报文报文的格式完全不同，所以直接设置报文的字节数据。
-	 * 
-	 * @param startindex
-	 *            待设置报文头的起始字节位置。（0为第一个位置）
-	 * @param data
-	 *            要设置的数据，（长度为data的长度，startindex和data的长度的和应小于报文头的总长度）
-	 * @return 是否设置成功
-	 */
-	public boolean setMessageHeaderData(int startindex, byte[] data) {
-		if (startindex + data.length > msgHeader.length) {
-			return false;
-		}
-		for (int i = 0; i < data.length; i++) {
-			msgHeader[startindex + i] = data[i];
-		}
-		return true;
-	}
-
-	public boolean setMessageTPDUData(int startindex, byte[] data) {
-		if (startindex + data.length > msgTPDU.length) {
-			return false;
-		}
-		for (int i = 0; i < data.length; i++) {
-			msgTPDU[startindex + i] = data[i];
-		}
-		return true;
 	}
 
 	/** 设置消息类型. 应该为4字节字符串 */

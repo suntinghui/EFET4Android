@@ -56,8 +56,6 @@ public class CnMessageFactory {
 		/* 消息类型 */
 		String msgType = null;
 
-		String TPDU = null;
-		String msgHeader = null;
 		/* 位图起止位置 */
 		int bitmapStart = -1;
 		/* 位图结束位置 */
@@ -74,37 +72,6 @@ public class CnMessageFactory {
 		 * */
 		m = new CnMessage(msgType);
 		// TODO it only parses ASCII messages for now
-
-		/**
-		 * 得到TPDU信息 由于报头为bcd压缩故此除2
-		 * */
-		byte[] msgTPDUData = new byte[5];
-		System.arraycopy(respMsg, 0, msgTPDUData, 0, 5);
-		TPDU = ConvertUtil._bcd2Str(msgTPDUData);
-		/**
-		 * 设置TPDU的数据
-		 * */
-		if (m.setMessageTPDUData(0, TPDU.getBytes()) == false) {
-			System.out.println("设置TPDU出错。");
-			System.exit(-1);
-		}
-
-		/**
-		 * 得到报文头信息 由于报头为bcd压缩故此除2
-		 * */
-		byte[] msgHeaderData = new byte[6];
-		System.arraycopy(respMsg, 5, msgHeaderData, 0, 6);
-		msgHeader = ConvertUtil._bcd2Str(msgHeaderData);
-		/**
-		 * 设置报文头的数据
-		 * */
-		if (m.setMessageHeaderData(0, msgHeader.getBytes()) == false) {
-			System.out.println("设置报文头出错。");
-			System.exit(-1);
-		}
-
-		System.out.println("respMsg TPDU: \t[" + new String(m.getmsgTPDU()) + "]");
-		System.out.println("respMsg Hearder: \t[" + new String(m.getmsgHeader()) + "]");
 
 		/**
 		 * 位图
