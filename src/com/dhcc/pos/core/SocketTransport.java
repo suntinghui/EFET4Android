@@ -12,17 +12,9 @@ import com.dhcc.pos.packets.util.ConvertUtil;
 
 public class SocketTransport {
 
-	/*
-	 * private static String host = "192.168.22.18"; 
-	 * private static int port = 6061; 
-	 * private static int timeout = 45000; 
-	 * private static int headlength = 2;
-	 */
 	private String host;
 	private int port;
 	private int timeout;
-	private int headlength;
-	private int TPDUlength;
 
 	/** 返回的报文 */
 	String readLine = null;
@@ -44,14 +36,12 @@ public class SocketTransport {
 		this.host = "58.221.92.138";
 		this.port = 9099;
 		this.timeout = 45000;
-		this.headlength = 12;
 	}
 
-	public SocketTransport(String host, int port, int timeout, int headlength) {
+	public SocketTransport(String host, int port, int timeout) {
 		this.host = host;
 		this.port = port;
 		this.timeout = timeout;
-		this.headlength = headlength;
 	}
 
 

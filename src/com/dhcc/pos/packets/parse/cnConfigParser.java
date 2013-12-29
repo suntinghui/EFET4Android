@@ -26,8 +26,6 @@ import com.dhcc.pos.packets.CnMessageFactory;
  */
 public class cnConfigParser {
 
-	static CnMessageFactory mfact = null;
-
 	/**
 	 * 通过xml文件创建消息工厂，
 	 * 
@@ -36,15 +34,13 @@ public class cnConfigParser {
 	 * @return
 	 * @throws Exception
 	 */
-	public static CnMessageFactory createFromXMLConfigFile(InputStream stream) throws Exception {
-		mfact = CnMessageFactory.getInstance();
-
+	public static void createFromXMLConfigFile(InputStream stream) throws Exception {
 		try {
 
 			if (stream != null) {
 				try {
 					// 解析
-					parse(mfact, stream);
+					parse(stream);
 				} finally {
 					try {
 						stream.close();
@@ -56,7 +52,6 @@ public class cnConfigParser {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return mfact;
 	}
 
 	/**
@@ -66,7 +61,7 @@ public class cnConfigParser {
 	 * @param stream
 	 * @throws IOException
 	 */
-	protected static void parse(CnMessageFactory mfact, InputStream stream) throws IOException {
+	protected static void parse(InputStream stream) throws IOException {
 		final DocumentBuilderFactory docfact = DocumentBuilderFactory.newInstance();
 		/**
 		 * 变量
@@ -135,7 +130,7 @@ public class cnConfigParser {
 			/*
 			 * 以msgtypeid作为key 将parseMap放入（CnMessageFactory）的ParseMap之中
 			 */
-			mfact.setParseMap(msgtypeid, parseMap);
+			CnMessageFactory.getInstance().setParseMap(msgtypeid, parseMap);
 		}
 
 	}

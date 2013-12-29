@@ -38,11 +38,6 @@ public class CnMessage {
 		this.msgtypeid = msgtypeid;
 	}
 
-	/** 设置消息类型. 应该为4字节字符串 */
-	public void setMsgTypeID(String msgtypeid) {
-		this.msgtypeid = msgtypeid;
-	}
-
 	/** 获取消息类型. */
 	public String getMsgTypeID() {
 		return msgtypeid;
@@ -203,7 +198,6 @@ public class CnMessage {
 					try {
 						bout.write(byteFieldLLLVAR);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

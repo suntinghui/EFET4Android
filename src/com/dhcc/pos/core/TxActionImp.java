@@ -17,8 +17,6 @@ import com.dhcc.pos.packets.util.ConvertUtil;
 
 public class TxActionImp {
 
-	CnMessageFactory mfact = null;
-
 	CnMessage m = null;
 
 	private Map<String, Object> req_map = null;
@@ -56,7 +54,7 @@ public class TxActionImp {
 			 * */
 			try {
 				/* 通过xml消息配置文件创建消息工厂， */
-				mfact = cnConfigParser.createFromXMLConfigFile(inStream);
+				cnConfigParser.createFromXMLConfigFile(inStream);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -76,10 +74,10 @@ public class TxActionImp {
 		return null;
 	}
 
-	public CnMessage registerReqMsg() {
+	private CnMessage registerReqMsg() {
 		String msgType = (String) req_map.get("fieldTrancode");
 
-		Map<Integer, cnFieldParseInfo> parseMap = mfact.getParseMap(msgType);
+		Map<Integer, cnFieldParseInfo> parseMap = CnMessageFactory.getInstance().getParseMap(msgType);
 
 		m = new CnMessage(msgType);
 
@@ -225,7 +223,7 @@ public class TxActionImp {
 		try {
 			resp_map.put("fieldTrancode", this.clientTransferCode);
 
-			CnMessage resp_msg = mfact.parseMessage(resp_byte);
+			CnMessage resp_msg = CnMessageFactory.getInstance().parseMessage(resp_byte);
 			for (int i = 0; i < 128; i++) {
 				if (resp_msg.hasField(i)) {
 					resp_map.put("field" + i, resp_msg.getField(i).toString());
@@ -249,7 +247,6 @@ public class TxActionImp {
 		System.out.println("Message TPDU = \t[" + TPDU + "]");
 		System.out.println("Message Header = \t[" + HEADER + "]");
 		System.out.println("Message TypeID = \t[" + m.getMsgTypeID() + "]");
-		m.hasField(1);
 
 		for (int i = 2; i < 128; i++) {
 			if (m.hasField(i)) {

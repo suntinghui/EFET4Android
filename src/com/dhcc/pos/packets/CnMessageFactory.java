@@ -44,10 +44,6 @@ public class CnMessageFactory {
 	 * 
 	 * @param buf
 	 *            8583 消息字节数组
-	 * @param msgTPDUlength
-	 *            TPDU长度
-	 * @param msgheaderlength
-	 *            报文长度
 	 * @return
 	 */
 	public CnMessage parseMessage(byte[] respMsg) throws ParseException {
