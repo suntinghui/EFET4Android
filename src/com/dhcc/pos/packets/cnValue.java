@@ -31,14 +31,14 @@ public class cnValue<T> {
 		this.length = len;
 
 		// 设置变长域的长度
-		int tempLen = val.toString().getBytes().length;
+//		int tempLen = val.toString().getBytes().length;
 
 		if ((this.datatype.equals(IFieldType.LLVAR)) || (this.datatype.equals(IFieldType.LLNVAR))) {
-			if (tempLen > 99) {
+			if (len > 99) {
 				throw new IllegalArgumentException("LLVAR or LLNVAR can only hold values up to 99 chars");
 			}
 		} else if ((this.datatype.equals(IFieldType.LLLVAR)) || (this.datatype.equals(IFieldType.LLLNVAR))) {
-			if (tempLen > 999) {
+			if (len > 999) {
 				throw new IllegalArgumentException("LLLVAR or LLLNVAR can only hold values up to 999 chars");
 			}
 		}
